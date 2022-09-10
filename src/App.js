@@ -5,6 +5,8 @@ import {CardList} from './components/card-list/card-list.component'
 
 import './components/card-list/card-list.styles.css'
 
+import {SearchBox} from './components/search-box/search-box.component'
+
 
 class App extends Component{
   constructor(){
@@ -21,6 +23,10 @@ class App extends Component{
     .then(response => response.json())
     .then(users => this.setState({monsters : users}));
   }
+
+  handleChange = e => {
+    this.setState({searchField:e.target.value})
+  }
   render(){
     const {monsters,searchField} = this.state;
     const filteredMonsters = monsters.filter(monster => monster.name.toLowerCase().includes(searchField.toLowerCase()));
@@ -28,8 +34,9 @@ class App extends Component{
     return(
       
       <div className='App'>
-      <input type="search" placeholder='Search Monster' onChange={e => this.setState({searchField:e.target.value})}/>
-      <CardList monsters = {filteredMonsters}></CardList>
+      <h1>Monster Rolodex</h1>
+      <SearchBox placeholder='Search Monster' handleChange={this.handleChange} />
+      <CardList monsters = {filteredMonsters} />
       
       </div>
 
